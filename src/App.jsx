@@ -10,16 +10,18 @@ function getCategorieByCategorieId(categoryId) {
 }
 
 function getUserByCategoriesId(ownerId) {
-  const foundUser = usersFromServer.find(user => user.id === ownerId);
-
-  return foundUser;
+  return usersFromServer.find(category => category.id === ownerId);
 }
 
-export const products = productsFromServer.map(product => ({
-  ...product,
-  category: getCategorieByCategorieId(product.categoryId),
-  user: getUserByCategoriesId(categoriesFromServer.map),
-}));
+export const products = productsFromServer.map((product) => {
+  const categoryTest = getCategorieByCategorieId(product.categoryId);
+
+  return {
+    ...product,
+    category: getCategorieByCategorieId(product.categoryId),
+    user: getUserByCategoriesId(categoryTest.ownerId),
+  };
+});
 export const App = () => (
   <div className="section">
     <div className="container">
@@ -213,7 +215,7 @@ export const App = () => (
                   data-cy="ProductUser"
                   className="has-text-link"
                 >
-                  {product.user}
+                  {product.user.name}
                 </td>
               </tr>
             ))}
